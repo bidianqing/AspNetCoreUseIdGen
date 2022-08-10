@@ -14,16 +14,18 @@ namespace AspNetCoreUseIdGen.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private readonly IdGenerator _idGenerator;
+
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IdGenerator idGenerator)
         {
             _logger = logger;
+            _idGenerator = idGenerator;
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            var generator = new IdGenerator(16753);
-            var id = generator.CreateId();
+            var id = _idGenerator.CreateId();
 
 
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
